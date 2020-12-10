@@ -1,0 +1,27 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: GNYerc20Token
+    network: mainnet
+    source:
+      address: "0xb1f871Ae9462F1b2C6826E88A7827e76f86751d4"
+      abi: GNYerc20Token
+      startBlock: 11314113
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - Transfer
+      abis:
+        - name: GNYerc20Token
+          file: ./abis/GNYerc20Token.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
